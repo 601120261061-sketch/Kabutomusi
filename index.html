@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>My昆虫館</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Three.js & OrbitControls -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
+  <style>
+    /* ふりがな表示制御 */
+    body.hide-ruby rt {
+      display: none;
+    }
+    
+    /* タブ切り替え制御 */
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 3Dキャンバス領域 */
+    #three-canvas-container {
+      width: 100%;
+      height: 60vh;
+      min-height: 400px;
+      position: relative;
+    }
+    #three-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      border-radius: 0.5rem;
+    }
+
+    /* モーダル背景 */
+    .modal-overlay {
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(2px);
+    }
+    
+    /* カスタムスクロールバー */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1; 
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #888; 
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #555; 
+    }
+  </style>
+</head>
+<body class="bg-amber-50 text-slate-800 font-sans min-h-screen flex flex-col hide-ruby">
+
+  <!-- 共通ヘッダー -->
+  <header class="bg-green-700 text-white shadow-md sticky top-0 z-40">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <div class="flex items-center gap-2">
+        <i class="fa-solid fa-bug text-2xl text-amber-300"></i>
+        <h1 class="text-xl md:text-2xl font-bold tracking-wider">
+          <ruby>My<rt>まい</rt></ruby><ruby>昆虫館<rt>こんちゅうかん</rt></ruby>
+        </h1>
+      </div>
+      <div class="flex items-center gap-3 md:gap-4 text-sm">
+        <!-- ふりがな切替トグル -->
+        <label class="flex items-center cursor-pointer gap-1">
+          <span class="hidden md:inline"><ruby>振<rt>ふ</rt></ruby>りがな</span>
+          <span class="md:hidden"><ruby>仮名<rt>かな</rt></ruby></span>
+          <div class="relative inline-block w-10 h-6 align-middle select-none transition duration-200 ease-in">
+            <input type="checkbox" name="toggle" id="ruby-toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 border-gray-300 appearance-none cursor-pointer transition-transform duration-200 ease-in-out z-10" style="top:0; left:0;"/>
+            <label for="ruby-toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+          </div>
+        </label>
+        
+        <!-- 言語切替（ダミー） -->
+        <button class="bg-green-600 hover:bg-green-500 px-2 py-1 rounded border border-green-500 transition">
+          <i class="fa-solid fa-earth-americas"></i> <ruby>日<rt>に</rt></ruby> / En
+        </button>
+      </div>
+    </div>
+    
+    <!-- タブナビゲーション -->
+    <nav class="bg-green-800 overflow-x-auto">
+      <div class="container mx-auto px-2 flex whitespace-nowrap">
+        <button onclick="switchTab('tab-register')" class="tab-btn active px-4 py-3 text-green-100 hover:text-white hover:bg-green-600 border-b-4 border-amber-400 font-semibold transition" data-target="tab-register">
+          <i class="fa-solid fa-camera mr-1"></i> <ruby>昆虫<rt>こんちゅう</rt></ruby>を<ruby>登録<rt>とうろく</rt></ruby>
+        </button>
+        <button onclick="switchTab('tab-museum')" class="tab-btn px-4 py-3 text-green-200 hover:text-white hover:bg-green-600 border-b-4 border-transparent font-semibold transition" data-target="tab-museum">
+          <i class="fa-solid fa-cube mr-1"></i> マイ<ruby>昆虫館<rt>こんちゅうかん</rt></ruby>
+        </button>
+        <button onclick="switchTab('tab-dictionary')" class="tab-btn px-4 py-3 text-green-200 hover:text-white hover:bg-green-600 border-b-4 border-transparent font-semibold transition" data-target="tab-dictionary">
+          <i class="fa-solid fa-book-open mr-1"></i> <ruby>昆虫図鑑<rt>こんちゅうずかん</rt></ruby>
+        </button>
+        <button onclick="switchTab('tab-world')" class="tab-btn px-4 py-3 text-green-200 hover:text-white hover:bg-green-600 border-b-4 border-transparent font-semibold transition" data-target="tab-world">
+          <i class="fa-solid fa-globe mr-1"></i> <ruby>世界<rt>せかい</rt></ruby>の<ruby>昆虫館<rt>こんちゅうかん</rt></ruby>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- メインコンテンツ -->
+  <main class="flex-grow container mx-auto px-4 py-6 md:py-8 max-w-5xl">
+    
+    <!-- 画面1: 昆虫登録 -->
+    <section id="tab-register" class="tab-content active">
+      <div class="bg-white rounded-xl shadow-sm p-6 md:p-10 text-center max-w-2xl mx-auto border border-amber-100">
+        <h2 class="text-2xl font-bold text-green-800 mb-2"><ruby>新<rt>あたら</rt></ruby>しい<ruby>昆虫<rt>こんちゅう</rt></ruby>を<ruby>見<rt>み</rt></ruby>つけた！</h2>
+        <p class="text-slate-600 mb-8"><ruby>写真<rt>しゃしん</rt></ruby>を<ruby>撮<rt>と</rt></ruby>って、AIに<ruby>判定<rt>はんてい</rt></ruby>してもらおう。</p>
+        
+        <div class="border-4 border-dashed border-green-200 rounded-2xl p-8 mb-6 bg-green-50 hover:bg-green-100 transition cursor-pointer" onclick="document.getElementById('file-upload').click()">
+          <i class="fa-solid fa-cloud-arrow-up text-5xl text-green-400 mb-4"></i>
+          <p class="font-bold text-lg text-green-700"><ruby>写真<rt>しゃしん</rt></ruby>を<ruby>選<rt>えら</rt></ruby>ぶ・<ruby>撮影<rt>さつえい</rt></ruby>する</p>
+          <p class="text-sm text-green-600 mt-2">タップしてカメラを<ruby>起動<rt>きどう</rt></ruby></p>
+        </div>
+        <!-- ダミーのファイルインプット -->
+        <input type="file" id="file-upload" class="hidden" accept="image/*" onchange="startAIFlow()">
+        
+        <div class="text-left bg-amber-50 p-4 rounded-lg border border-amber-200">
+          <h3 class="font-bold text-amber-800 mb-2"><i class="fa-solid fa-lightbulb text-amber-500"></i> <ruby>綺麗<rt>きれい</rt></ruby>に<ruby>判定<rt>はんてい</rt></ruby>するコツ</h3>
+          <ul class="list-disc list-inside text-sm text-amber-900 space-y-1">
+            <li><ruby>明<rt>あか</rt></ruby>るい<ruby>場所<rt>ばしょ</rt></ruby>で<ruby>撮影<rt>さつえい</rt></ruby>してください。</li>
+            <li><ruby>昆虫<rt>こんちゅう</rt></ruby>が<ruby>中心<rt>ちゅうしん</rt></ruby>にくるように<ruby>大<rt>おお</rt></ruby>きく<ruby>写<rt>うつ</rt></ruby>してください。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 画面2: マイ昆虫館 (3D) -->
+    <section id="tab-museum" class="tab-content">
+      <div class="bg-white rounded-xl shadow-sm p-4 border border-amber-100 mb-4 flex justify-between items-center flex-wrap gap-4">
+        <div>
+          <h2 class="text-xl font-bold text-green-800 flex items-center gap-2">
+            <span id="display-museum-name">わたしの<ruby>昆虫館<rt>こんちゅうかん</rt></ruby></span>
+            <button onclick="editMuseumName()" class="text-sm text-slate-400 hover:text-green-600"><i class="fa-solid fa-pen"></i></button>
+          </h2>
+          <p class="text-sm text-slate-500 mt-1"><ruby>展示数<rt>てんじすう</rt></ruby>: <span id="display-insect-count" class="font-bold text-green-600">0</span> <ruby>匹<rt>ひき</rt></ruby></p>
+        </div>
+        <div class="flex gap-2">
+          <button class="px-3 py-1.5 bg-amber-100 text-amber-800 rounded-lg text-sm font-semibold hover:bg-amber-200 transition"><i class="fa-solid fa-palette"></i> <ruby>模様替<rt>もようが</rt></ruby>え</button>
+          <button class="px-3 py-1.5 bg-blue-100 text-blue-800 rounded-lg text-sm font-semibold hover:bg-blue-200 transition"><i class="fa-solid fa-user"></i> アバター</button>
+        </div>
+      </div>
+      
+      <div class="bg-slate-900 rounded-xl overflow-hidden shadow-inner relative">
+        <!-- Three.js Container -->
+        <div id="three-canvas-container"></div>
+        
+        <!-- 3D UI Overlay -->
+        <div class="absolute bottom-4 left-4 bg-black bg-opacity-50 text-white px-3 py-2 rounded-lg text-xs pointer-events-none backdrop-blur-sm">
+          <i class="fa-solid fa-hand-pointer"></i> スワイプで<ruby>視点移動<rt>してんいどう</rt></ruby> / ピンチでズーム<br>
+          <i class="fa-regular fa-hand-point-up mt-1"></i> <ruby>昆虫<rt>こんちゅう</rt></ruby>をタップして<ruby>詳細<rt>しょうさい</rt></ruby>を<ruby>見<rt>み</rt></ruby>る
+        </div>
+      </div>
+    </section>
+
+    <!-- 画面3: 昆虫図鑑 -->
+    <section id="tab-dictionary" class="tab-content">
+      <div class="flex justify-between items-end mb-6">
+        <h2 class="text-2xl font-bold text-green-800"><ruby>昆虫<rt>こんちゅう</rt></ruby><ruby>図鑑<rt>ずかん</rt></ruby>コレクション</h2>
+        <div class="text-slate-600 font-semibold"><ruby>達成率<rt>たっせいりつ</rt></ruby>: <span class="text-green-600 text-xl">12</span>%</div>
+      </div>
+      
+      <!-- グリッド表示 -->
+      <div id="dictionary-grid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        <!-- JavaScriptで動的生成 -->
+      </div>
+    </section>
+
+    <!-- 画面4: 世界の昆虫館 -->
+    <section id="tab-world" class="tab-content">
+      <h2 class="text-2xl font-bold text-green-800 mb-6"><ruby>世界<rt>せかい</rt></ruby>の<ruby>昆虫館<rt>こんちゅうかん</rt></ruby>マップ</h2>
+      
+      <div class="bg-blue-50 rounded-xl p-4 mb-8 flex justify-center items-center h-64 border border-blue-200 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-20" style="background-image: repeating-linear-gradient(45deg, #cbd5e1 25%, transparent 25%, transparent 75%, #cbd5e1 75%, #cbd5e1), repeating-linear-gradient(45deg, #cbd5e1 25%, #f1f5f9 25%, #f1f5f9 75%, #cbd5e1 75%, #cbd5e1); background-position: 0 0, 10px 10px; background-size: 20px 20px;"></div>
+        <div class="relative z-10 text-center">
+          <i class="fa-solid fa-map-location-dot text-5xl text-blue-400 mb-2"></i>
+          <p class="text-blue-800 font-bold"><ruby>日本地図<rt>にほんちず</rt></ruby>・<ruby>世界地図<rt>せかいちず</rt></ruby>（モック）</p>
+          <p class="text-sm text-blue-600"><ruby>各地<rt>かくち</rt></ruby>のユーザーの<ruby>昆虫館<rt>こんちゅうかん</rt></ruby>を<ruby>探<rt>さが</rt></ruby>せます</p>
+        </div>
+      </div>
+
+      <h3 class="text-lg font-bold text-slate-700 mb-4"><i class="fa-solid fa-star text-amber-400"></i> おすすめの<ruby>昆虫館<rt>こんちゅうかん</rt></ruby></h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="bg-white rounded-lg shadow p-4 border border-slate-100 flex items-center gap-4 hover:shadow-md transition cursor-pointer">
+          <div class="w-16 h-16 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-500 text-2xl flex-shrink-0">
+            <i class="fa-solid fa-user-astronaut"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-slate-800">タカシのスーパー<ruby>昆虫館<rt>こんちゅうかん</rt></ruby></h4>
+            <p class="text-xs text-slate-500"><i class="fa-solid fa-location-dot"></i> <ruby>北海道<rt>ほっかいどう</rt></ruby>・<ruby>展示数<rt>てんじすう</rt></ruby> 45<ruby>匹<rt>ひき</rt></ruby></p>
+          </div>
+        </div>
+        <div class="bg-white rounded-lg shadow p-4 border border-slate-100 flex items-center gap-4 hover:shadow-md transition cursor-pointer">
+          <div class="w-16 h-16 rounded-full bg-pink-100 flex items-center justify-center text-pink-500 text-2xl flex-shrink-0">
+            <i class="fa-solid fa-user-ninja"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-slate-800">さくら<ruby>自然館<rt>しぜんかん</rt></ruby></h4>
+            <p class="text-xs text-slate-500"><i class="fa-solid fa-location-dot"></i> <ruby>東京都<rt>とうきょうと</rt></ruby>・<ruby>展示数<rt>てんじすう</rt></ruby> 128<ruby>匹<rt>ひき</rt></ruby></p>
+          </div>
+        </div>
+        <div class="bg-white rounded-lg shadow p-4 border border-slate-100 flex items-center gap-4 hover:shadow-md transition cursor-pointer">
+          <div class="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-500 text-2xl flex-shrink-0">
+            <i class="fa-solid fa-user-tie"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-slate-800">Global Bugs Museum</h4>
+            <p class="text-xs text-slate-500"><i class="fa-solid fa-location-dot"></i> USA・<ruby>展示数<rt>てんじすう</rt></ruby> 302<ruby>匹<rt>ひき</rt></ruby></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= モーダル群 ================= -->
+
+  <!-- ロード中モーダル -->
+  <div id="modal-loading" class="fixed inset-0 modal-overlay z-50 hidden flex items-center justify-center">
+    <div class="bg-white p-8 rounded-2xl shadow-xl text-center max-w-sm mx-4">
+      <div class="animate-spin text-green-500 text-5xl mb-4"><i class="fa-solid fa-circle-notch"></i></div>
+      <h3 class="text-xl font-bold text-slate-800 mb-2">AIが<ruby>解析中<rt>かいせきちゅう</rt></ruby>...</h3>
+      <p class="text-slate-500 text-sm"><ruby>図鑑<rt>ずかん</rt></ruby>データと<ruby>照合<rt>しょうごう</rt></ruby>しています</p>
+    </div>
+  </div>
+
+  <!-- AI判定結果モーダル -->
+  <div id="modal-ai-result" class="fixed inset-0 modal-overlay z-50 hidden flex items-center justify-center overflow-y-auto pt-10 pb-10">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-3xl mx-4 overflow-hidden flex flex-col max-h-full">
+      <div class="bg-green-600 px-6 py-4 flex justify-between items-center text-white flex-shrink-0">
+        <h3 class="text-xl font-bold"><ruby>判定結果<rt>はんていけっか</rt></ruby></h3>
+        <button onclick="closeModal('modal-ai-result')" class="text-white hover:text-green-200"><i class="fa-solid fa-xmark text-xl"></i></button>
+      </div>
+      
+      <div class="p-6 overflow-y-auto flex-grow">
+        <p class="text-center font-bold text-slate-700 mb-6">AIは<ruby>次<rt>つぎ</rt></ruby>の2つのどちらかだと<ruby>考<rt>かんが</rt></ruby>えました。<ruby>正解<rt>せいかい</rt></ruby>を<ruby>選<rt>えら</rt></ruby>んでください。</p>
+        
+        <div class="grid md:grid-cols-2 gap-6 mb-6">
+          <!-- 候補1 -->
+          <div class="border-2 border-green-200 rounded-xl p-4 hover:bg-green-50 hover:border-green-400 transition cursor-pointer flex flex-col h-full" onclick="selectInsect('カブトムシ', 'beetle')">
+            <div class="bg-slate-200 h-40 rounded-lg mb-4 flex items-center justify-center text-slate-400">
+              <i class="fa-solid fa-image text-4xl"></i><span class="ml-2 text-sm">ダミー<ruby>画像<rt>がぞう</rt></ruby></span>
+            </div>
+            <h4 class="text-2xl font-bold text-green-800 text-center mb-2">カブトムシ</h4>
+            <div class="text-sm space-y-2 flex-grow">
+              <p><span class="font-semibold text-slate-500"><ruby>分布<rt>ぶんぷ</rt></ruby>:</span> <ruby>日本全土<rt>にほんぜんど</rt></ruby></p>
+              <p><span class="font-semibold text-slate-500"><ruby>特徴<rt>とくちょう</rt></ruby>:</span> <ruby>立派<rt>りっぱ</rt></ruby>な<ruby>角<rt>つの</rt></ruby>がある。<ruby>夜行性<rt>やこうせい</rt></ruby>。</p>
+              <p><span class="font-semibold text-slate-500"><ruby>大<rt>おお</rt></ruby>きさ:</span> 30〜85mm</p>
+              <p><span class="font-semibold text-slate-500"><ruby>時期<rt>じき</rt></ruby>:</span> 6<ruby>月<rt>がつ</rt></ruby>〜8<ruby>月<rt>がつ</rt></ruby></p>
+            </div>
+            <button class="mt-4 w-full bg-green-500 text-white font-bold py-2 rounded-lg hover:bg-green-600"><ruby>これに決定<rt>けってい</rt></ruby>！</button>
+          </div>
+          
+          <!-- 候補2 -->
+          <div class="border-2 border-amber-200 rounded-xl p-4 hover:bg-amber-50 hover:border-amber-400 transition cursor-pointer flex flex-col h-full" onclick="selectInsect('コカブト', 'small_beetle')">
+            <div class="bg-slate-200 h-40 rounded-lg mb-4 flex items-center justify-center text-slate-400">
+              <i class="fa-solid fa-image text-4xl"></i><span class="ml-2 text-sm">ダミー<ruby>画像<rt>がぞう</rt></ruby></span>
+            </div>
+            <h4 class="text-2xl font-bold text-amber-800 text-center mb-2">コカブト</h4>
+            <div class="text-sm space-y-2 flex-grow">
+              <p><span class="font-semibold text-slate-500"><ruby>分布<rt>ぶんぷ</rt></ruby>:</span> <ruby>本州以南<rt>ほんしゅういなん</rt></ruby></p>
+              <p><span class="font-semibold text-slate-500"><ruby>特徴<rt>とくちょう</rt></ruby>:</span> <ruby>角<rt>つの</rt></ruby>が<ruby>小<rt>ちい</rt></ruby>さく、<ruby>胸<rt>むね</rt></ruby>にくぼみがある。</p>
+              <p><span class="font-semibold text-slate-500"><ruby>大<rt>おお</rt></ruby>きさ:</span> 18〜26mm</p>
+              <p><span class="font-semibold text-slate-500"><ruby>時期<rt>じき</rt></ruby>:</span> 5<ruby>月<rt>がつ</rt></ruby>〜10<ruby>月<rt>がつ</rt></ruby></p>
+            </div>
+            <button class="mt-4 w-full bg-amber-500 text-white font-bold py-2 rounded-lg hover:bg-amber-600"><ruby>これに決定<rt>けってい</rt></ruby>！</button>
+          </div>
+        </div>
+        
+        <div class="text-center mt-4">
+          <p class="text-sm text-slate-500 mb-2">どちらでもない<ruby>場合<rt>ばあい</rt></ruby>は...</p>
+          <button onclick="selectInsect('手入力', 'unknown')" class="px-4 py-2 border border-slate-300 rounded-lg text-slate-600 hover:bg-slate-50 font-semibold"><ruby>自分<rt>じぶん</rt></ruby>で<ruby>名前<rt>なまえ</rt></ruby>を<ruby>入力<rt>にゅうりょく</rt></ruby>する</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 発見記録フォームモーダル -->
+  <div id="modal-record" class="fixed inset-0 modal-overlay z-50 hidden flex items-center justify-center overflow-y-auto pt-10 pb-10">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-md mx-4 overflow-hidden flex flex-col">
+      <div class="bg-blue-600 px-6 py-4 flex justify-between items-center text-white">
+        <h3 class="text-xl font-bold"><ruby>発見<rt>はっけん</rt></ruby>の<ruby>記録<rt>きろく</rt></ruby></h3>
+        <button onclick="closeModal('modal-record')" class="text-white hover:text-blue-200"><i class="fa-solid fa-xmark text-xl"></i></button>
+      </div>
+      
+      <div class="p-6">
+        <form id="record-form" onsubmit="saveInsectRecord(event)">
+          <div class="mb-4">
+            <label class="block text-sm font-bold text-slate-700 mb-1"><ruby>昆虫<rt>こんちゅう</rt></ruby>の<ruby>名前<rt>なまえ</rt></ruby></label>
+            <input type="text" id="record-name" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 font-bold" required>
+            <input type="hidden" id="record-type">
+          </div>
+          
+          <div class="mb-4">
+            <label class="block text-sm font-bold text-slate-700 mb-1"><ruby>発見日<rt>はっけんび</rt></ruby></label>
+            <input type="date" id="record-date" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+          </div>
+          
+          <div class="mb-4">
+            <label class="block text-sm font-bold text-slate-700 mb-1"><ruby>発見<rt>はっけん</rt></ruby>した<ruby>都道府県<rt>とどうふけん</rt></ruby></label>
+            <select id="record-pref" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <option value="北海道">北海道</option>
+              <option value="東京都" selected>東京都</option>
+              <option value="愛知県">愛知県</option>
+              <option value="大阪府">大阪府</option>
+              <option value="福岡県">福岡県</option>
+              <option value="その他">その他</option>
+            </select>
+          </div>
+          
+          <div class="mb-6">
+            <label class="block text-sm font-bold text-slate-700 mb-1"><ruby>感想<rt>かんそう</rt></ruby>・メモ</label>
+            <textarea id="record-memo" rows="3" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="木にとまっていたよ！"></textarea>
+          </div>
+          
+          <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 shadow-md transform transition hover:-translate-y-0.5">
+            <ruby>図鑑<rt>ずかん</rt></ruby>と<ruby>昆虫館<rt>こんちゅうかん</rt></ruby>に<ruby>登録<rt>とうろく</rt></ruby>する！
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3Dモデル詳細モーダル -->
+  <div id="modal-3d-detail" class="fixed inset-0 modal-overlay z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-sm w-full overflow-hidden transform scale-95 transition-transform" id="detail-modal-content">
+      <div class="bg-green-700 h-24 flex items-center justify-center relative">
+        <button onclick="closeModal('modal-3d-detail')" class="absolute top-2 right-3 text-white/80 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+        <div class="w-20 h-20 bg-white rounded-full border-4 border-green-700 absolute -bottom-10 flex items-center justify-center shadow-md">
+          <i id="detail-icon" class="fa-solid fa-bug text-3xl text-green-600"></i>
+        </div>
+      </div>
+      <div class="pt-12 pb-6 px-6 text-center">
+        <h3 id="detail-name" class="text-2xl font-bold text-slate-800 mb-1">なまえ</h3>
+        <p class="text-xs text-slate-400 mb-4 font-mono">My Collection</p>
+        
+        <div class="bg-slate-50 rounded-lg p-3 text-left space-y-2 text-sm border border-slate-100">
+          <p><span class="text-slate-500 w-16 inline-block"><ruby>発見日<rt>はっけんび</rt></ruby>:</span> <span id="detail-date" class="font-semibold text-slate-700"></span></p>
+          <p><span class="text-slate-500 w-16 inline-block"><ruby>場所<rt>ばしょ</rt></ruby>:</span> <span id="detail-pref" class="font-semibold text-slate-700"></span></p>
+        </div>
+        
+        <div class="mt-4 text-left">
+          <p class="text-xs text-slate-500 mb-1">メモ</p>
+          <p id="detail-memo" class="bg-amber-50 p-3 rounded-lg text-sm text-slate-700 border border-amber-100"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ================= 処理スクリプト ================= -->
+  <script>
+    /* --- 状態管理 (State) --- */
+    const state = {
+      isRubyOn: false,
+      museumName: 'わたしの昆虫館',
+      insects: [] // 登録データ
+    };
+
+    /* 初期データロード */
+    function loadData() {
+      const savedInsects = localStorage.getItem('myInsectsData');
+      if (savedInsects) {
+        state.insects = JSON.parse(savedInsects);
+      } else {
+        // デフォルトデータ
+        state.insects = [
+          {
+            id: Date.now().toString(),
+            name: 'カブトムシ',
+            type: 'beetle',
+            date: new Date().toISOString().split('T')[0],
+            pref: '東京都',
+            memo: '公園の木にいたよ！かっこいい。'
+          }
+        ];
+        saveData();
+      }
+      
+      const savedName = localStorage.getItem('myMuseumName');
+      if (savedName) state.museumName = savedName;
+      
+      updateUI();
+    }
+
+    function saveData() {
+      localStorage.setItem('myInsectsData', JSON.stringify(state.insects));
+      localStorage.setItem('myMuseumName', state.museumName);
+    }
+
+    /* --- UI更新・イベント関連 --- */
+    document.addEventListener('DOMContentLoaded', () => {
+      // ルビのトグル設定
+      const rubyToggle = document.getElementById('ruby-toggle');
+      rubyToggle.addEventListener('change', (e) => {
+        state.isRubyOn = e.target.checked;
+        if (state.isRubyOn) {
+          document.body.classList.remove('hide-ruby');
+        } else {
+          document.body.classList.add('hide-ruby');
+        }
+      });
+      
+      // 今日の日付をセット
+      document.getElementById('record-date').value = new Date().toISOString().split('T')[0];
+
+      loadData();
+      renderDictionary();
+      initThreeJS();
+    });
+
+    function updateUI() {
+      document.getElementById('display-museum-name').innerText = state.museumName;
+      document.getElementById('display-insect-count').innerText = state.insects.length;
+    }
+
+    function editMuseumName() {
+      const newName = prompt('新しい館名を入力してください', state.museumName);
+      if (newName && newName.trim() !== '') {
+        state.museumName = newName.trim();
+        saveData();
+        updateUI();
+      }
+    }
+
+    /* --- タブ切り替え --- */
+    function switchTab(tabId) {
+      // タブボタンのスタイル更新
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active', 'border-amber-400', 'text-white');
+        btn.classList.add('border-transparent', 'text-green-200');
+        if (btn.dataset.target === tabId) {
+          btn.classList.remove('border-transparent', 'text-green-200');
+          btn.classList.add('active', 'border-amber-400', 'text-white');
+        }
+      });
+
+      // コンテンツの表示切替
+      document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.remove('active');
+      });
+      document.getElementById(tabId).classList.add('active');
+
+      // 3Dキャンバスのリサイズ対応
+      if (tabId === 'tab-museum') {
+        setTimeout(resizeThreeCanvas, 50); // DOM表示後にリサイズ計算
+      }
+      if (tabId === 'tab-dictionary') {
+        renderDictionary();
+      }
+    }
+
+    /* --- 登録フロー (AI -> フォーム) --- */
+    function startAIFlow() {
+      const fileInput = document.getElementById('file-upload');
+      if (fileInput.files.length === 0) return;
+
+      // ロード画面表示
+      document.getElementById('modal-loading').classList.remove('hidden');
+      
+      // 擬似AI解析 (1.5秒待機)
+      setTimeout(() => {
+        document.getElementById('modal-loading').classList.add('hidden');
+        document.getElementById('modal-ai-result').classList.remove('hidden');
+        // 連続入力を防ぐためリセット
+        fileInput.value = ""; 
+      }, 1500);
+    }
+
+    function selectInsect(name, type) {
+      closeModal('modal-ai-result');
+      
+      document.getElementById('record-name').value = name === '手入力' ? '' : name;
+      document.getElementById('record-type').value = type;
+      
+      document.getElementById('modal-record').classList.remove('hidden');
+      if(name === '手入力') document.getElementById('record-name').focus();
+    }
+
+    function saveInsectRecord(e) {
+      e.preventDefault();
+      const name = document.getElementById('record-name').value;
+      const type = document.getElementById('record-type').value || 'unknown';
+      const date = document.getElementById('record-date').value;
+      const pref = document.getElementById('record-pref').value;
+      const memo = document.getElementById('record-memo').value;
+
+      const newInsect = {
+        id: Date.now().toString(),
+        name, type, date, pref, memo
+      };
+
+      state.insects.push(newInsect);
+      saveData();
+      updateUI();
+      
+      // 3Dシーンの更新
+      addInsectToScene(newInsect);
+
+      closeModal('modal-record');
+      
+      // フォームリセット
+      e.target.reset();
+      document.getElementById('record-date').value = new Date().toISOString().split('T')[0];
+
+      // マイ昆虫館へ移動
+      alert(name + ' を登録しました！展示室を見に行きましょう。');
+      switchTab('tab-museum');
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.add('hidden');
+    }
+
+    /* --- 図鑑レンダリング --- */
+    function renderDictionary() {
+      const grid = document.getElementById('dictionary-grid');
+      grid.innerHTML = '';
+
+      // 登録済み昆虫
+      state.insects.forEach(insect => {
+        const card = document.createElement('div');
+        card.className = "bg-white rounded-xl shadow-sm border border-green-200 overflow-hidden hover:shadow-md transition cursor-pointer";
+        // 簡易アイコン設定
+        let iconClass = "fa-bug";
+        let colorClass = "text-green-600";
+        if(insect.type === 'beetle') { colorClass = "text-amber-800"; }
+        
+        card.innerHTML = `
+          <div class="h-24 bg-green-50 flex items-center justify-center border-b border-green-100">
+            <i class="fa-solid ${iconClass} text-4xl ${colorClass}"></i>
+          </div>
+          <div class="p-3">
+            <p class="text-xs text-slate-400 mb-1">${insect.date}</p>
+            <h4 class="font-bold text-slate-800 text-sm truncate">${insect.name}</h4>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+
+      // 未登録ダミーシルエット
+      for(let i=0; i<3; i++) {
+        const dummy = document.createElement('div');
+        dummy.className = "bg-slate-50 rounded-xl border border-slate-200 border-dashed overflow-hidden opacity-60";
+        dummy.innerHTML = `
+          <div class="h-24 flex items-center justify-center">
+            <i class="fa-solid fa-question text-3xl text-slate-300"></i>
+          </div>
+          <div class="p-3 bg-slate-100">
+            <div class="h-3 w-16 bg-slate-300 rounded mb-2"></div>
+            <div class="h-4 w-20 bg-slate-300 rounded"></div>
+          </div>
+        `;
+        grid.appendChild(dummy);
+      }
+    }
+
+
+    /* ================= Three.js 実装部 ================= */
+    let scene, camera, renderer, controls, raycaster, mouse;
+    const insectMeshes = [];
+
+    function initThreeJS() {
+      const container = document.getElementById('three-canvas-container');
+      
+      // シーン構築
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x1e293b); // slate-800
+      
+      // カメラ構築
+      camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
+      camera.position.set(0, 8, 12);
+
+      // レンダラー構築
+      renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setSize(container.clientWidth, container.clientHeight);
+      renderer.shadowMap.enabled = true;
+      renderer.domElement.id = 'three-canvas';
+      container.appendChild(renderer.domElement);
+
+      // コントロール (マウス/タッチでの視点移動)
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.05;
+      controls.maxPolarAngle = Math.PI / 2 - 0.1; // 地下に行かないように
+      controls.minDistance = 3;
+      controls.maxDistance = 20;
+
+      // ライト
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+      scene.add(ambientLight);
+
+      const dirLight = new THREE.DirectionalLight(0xfff0dd, 0.8);
+      dirLight.position.set(5, 10, 5);
+      dirLight.castShadow = true;
+      scene.add(dirLight);
+
+      // 展示ケース（土台）の作成
+      createExhibitBase();
+
+      // 既存の昆虫を配置
+      rebuildInsects();
+
+      // クリックイベント用
+      raycaster = new THREE.Raycaster();
+      mouse = new THREE.Vector2();
+      renderer.domElement.addEventListener('pointerdown', onPointerDown);
+
+      // リサイズイベント
+      window.addEventListener('resize', resizeThreeCanvas);
+
+      // アニメーションループ開始
+      animate();
+    }
+
+    function createExhibitBase() {
+      // 土
+      const groundGeo = new THREE.BoxGeometry(10, 0.5, 10);
+      const groundMat = new THREE.MeshLambertMaterial({ color: 0x4a3728 }); // 焦げ茶
+      const ground = new THREE.Mesh(groundGeo, groundMat);
+      ground.position.y = -0.25;
+      ground.receiveShadow = true;
+      scene.add(ground);
+
+      // 枠（木）
+      const frameMat = new THREE.MeshLambertMaterial({ color: 0x8b5a2b });
+      const frameGeo1 = new THREE.BoxGeometry(10.4, 0.8, 0.2);
+      const frame1 = new THREE.Mesh(frameGeo1, frameMat);
+      frame1.position.set(0, 0, 5.1);
+      scene.add(frame1);
+      
+      const frame2 = new THREE.Mesh(frameGeo1, frameMat);
+      frame2.position.set(0, 0, -5.1);
+      scene.add(frame2);
+
+      const frameGeo2 = new THREE.BoxGeometry(0.2, 0.8, 10.4);
+      const frame3 = new THREE.Mesh(frameGeo2, frameMat);
+      frame3.position.set(5.1, 0, 0);
+      scene.add(frame3);
+
+      const frame4 = new THREE.Mesh(frameGeo2, frameMat);
+      frame4.position.set(-5.1, 0, 0);
+      scene.add(frame4);
+      
+      // アクセント（石や草のダミー）
+      const stoneGeo = new THREE.DodecahedronGeometry(0.5);
+      const stoneMat = new THREE.MeshLambertMaterial({ color: 0x888888 });
+      const stone = new THREE.Mesh(stoneGeo, stoneMat);
+      stone.position.set(-3, 0.2, -3);
+      stone.castShadow = true;
+      scene.add(stone);
+    }
+
+    // 昆虫オブジェクトの生成（簡易プロキシ）
+    function createInsectMesh(insectData) {
+      const group = new THREE.Group();
+      group.userData = insectData; // クリック判定用にデータ保持
+
+      const isBeetle = insectData.type === 'beetle';
+      const baseColor = isBeetle ? 0x3d1c04 : (insectData.type === 'small_beetle' ? 0x222222 : 0x2e4a22);
+
+      const mat = new THREE.MeshLambertMaterial({ color: baseColor });
+
+      // 体
+      const bodyGeo = new THREE.SphereGeometry(0.6, 16, 16);
+      const body = new THREE.Mesh(bodyGeo, mat);
+      body.scale.set(1, 0.6, 1.4);
+      body.position.y = 0.4;
+      body.castShadow = true;
+      group.add(body);
+
+      // 頭
+      const headGeo = new THREE.SphereGeometry(0.3, 16, 16);
+      const head = new THREE.Mesh(headGeo, mat);
+      head.position.set(0, 0.4, 0.9);
+      head.castShadow = true;
+      group.add(head);
+
+      // カブトムシの角
+      if (isBeetle) {
+        const hornGeo = new THREE.CylinderGeometry(0.02, 0.08, 0.8, 8);
+        const horn = new THREE.Mesh(hornGeo, mat);
+        horn.rotation.x = Math.PI / 3;
+        horn.position.set(0, 0.7, 1.2);
+        horn.castShadow = true;
+        group.add(horn);
+      }
+
+      // ヒットボックス（クリック判定を容易にするための透明な箱）
+      const hitBoxGeo = new THREE.BoxGeometry(1.5, 1.5, 2.5);
+      const hitBoxMat = new THREE.MeshBasicMaterial({ visible: false });
+      const hitBox = new THREE.Mesh(hitBoxGeo, hitBoxMat);
+      hitBox.position.y = 0.5;
+      hitBox.userData = insectData; // ここにもデータを入れる
+      group.add(hitBox);
+      
+      // 配列にヒットボックスを登録してRaycast対象にする
+      insectMeshes.push(hitBox);
+
+      return group;
+    }
+
+    function addInsectToScene(insectData, index = -1) {
+      const mesh = createInsectMesh(insectData);
+      
+      // 配置計算 (適当にばらけさせる)
+      const i = index !== -1 ? index : state.insects.length - 1;
+      const row = Math.floor(i / 3);
+      const col = i % 3;
+      
+      const x = (col - 1) * 3 + (Math.random() * 1 - 0.5);
+      const z = (row - 1) * 3 + (Math.random() * 1 - 0.5);
+      
+      mesh.position.set(x, 0, z);
+      
+      // ランダムな向き
+      mesh.rotation.y = Math.random() * Math.PI * 2;
+
+      scene.add(mesh);
+    }
+
+    function rebuildInsects() {
+      // 既存のメッシュをクリア (簡易実装のため配列リセットと全再構築)
+      insectMeshes.length = 0;
+      // 注意: 本格的なアプリならscene.remove()してメモリ解放(dispose)が必要
+      
+      state.insects.forEach((insect, index) => {
+        addInsectToScene(insect, index);
+      });
+    }
+
+    function resizeThreeCanvas() {
+      const container = document.getElementById('three-canvas-container');
+      if(!container || !camera || !renderer) return;
+      
+      const width = container.clientWidth;
+      const height = container.clientHeight;
+      
+      if(width === 0 || height === 0) return; // 非表示時はスキップ
+
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height);
+    }
+
+    function onPointerDown(event) {
+      const container = document.getElementById('three-canvas-container');
+      const rect = container.getBoundingClientRect();
+      
+      // キャンバス内の相対座標 (-1 to +1)
+      mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+      mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+      raycaster.setFromCamera(mouse, camera);
+      
+      // insectMeshes (透明なヒットボックス) との交差判定
+      const intersects = raycaster.intersectObjects(insectMeshes);
+      
+      if (intersects.length > 0) {
+        const insectData = intersects[0].object.userData;
+        show3DDetailModal(insectData);
+      }
+    }
+
+    function show3DDetailModal(data) {
+      document.getElementById('detail-name').innerText = data.name;
+      document.getElementById('detail-date').innerText = data.date;
+      document.getElementById('detail-pref').innerText = data.pref;
+      document.getElementById('detail-memo').innerText = data.memo || 'メモなし';
+      
+      document.getElementById('modal-3d-detail').classList.remove('hidden');
+      
+      // ポップアップアニメーション用
+      const content = document.getElementById('detail-modal-content');
+      content.classList.remove('scale-95');
+      content.classList.add('scale-100');
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+      if (controls) controls.update();
+      if (renderer && scene && camera) {
+        renderer.render(scene, camera);
+      }
+    }
+  </script>
+</body>
+</html>
+
