@@ -3,8 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>My昆虫館</title>
+  <title>My昆虫館 / My Insect Museum</title>
+
+  <!-- PWA & Mobile Web App Meta Tags -->
+  <meta name="theme-color" content="#065f46">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="My昆虫館">
   
+  <!-- 画像のロゴデザインを再現した高精度SVGホーム画面アイコン (Apple Touch Icon & Favicon) -->
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='110' fill='%23fdfbf7'/%3E%3Cpath d='M256 50v45M256 50l25 15-25 15' stroke='%234d7c0f' stroke-width='8' stroke-linecap='round' stroke-linejoin='round' fill='%234d7c0f'/%3E%3Cpath d='M180 145l76-45 76 45' stroke='%2378350f' stroke-width='10' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Crect x='140' y='155' width='18' height='130' rx='5' fill='%2392400e'/%3E%3Crect x='354' y='155' width='18' height='130' rx='5' fill='%2392400e'/%3E%3Cpath d='M175 285 C175 155, 337 155, 337 285 Z' fill='%23e0f2fe' stroke='%2378350f' stroke-width='8'/%3E%3Crect x='115' y='285' width='282' height='26' rx='10' fill='%2378350f'/%3E%3Cpath d='M235 235c0-12 10-22 21-22s21 10 21 22v25c0 8-10 15-21 15s-21-7-21-15z' fill='%23451a03'/%3E%3Cpath d='M246 215c-18-22-28-15-38-15m66 15c18-22 28-15 38-15' stroke='%23451a03' stroke-width='9' stroke-linecap='round' fill='none'/%3E%3Ccircle cx='382' cy='225' r='24' fill='%23f0fdf4' stroke='%2378350f' stroke-width='7'/%3E%3Cline x1='399' y1='242' x2='422' y2='265' stroke='%2378350f' stroke-width='9' stroke-linecap='round'/%3E%3Cpath d='M95 235c20-30 50-10 40 20-20 10-35 0-40-20z' fill='%2365a30d'/%3E%3Cpath d='M415 175c15-25 40-5 30 20-15 10-25 0-30-20z' fill='%2365a30d'/%3E%3Ctext x='256' y='388' font-family='Arial Black, sans-serif' font-weight='900' font-size='62' text-anchor='middle'%3E%3Ctspan fill='%2315803d'%3EMy%3C/tspan%3E%3Ctspan fill='%23166534'%3E昆%3C/tspan%3E%3Ctspan fill='%23b45309'%3E虫%3C/tspan%3E%3Ctspan fill='%231d4ed8'%3E館%3C/tspan%3E%3C/text%3E%3Cpath d='M170 425c35 15 135 15 172 0' stroke='%2378350f' stroke-width='6' stroke-linecap='round' fill='none'/%3E%3C/svg%3E">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='110' fill='%23fdfbf7'/%3E%3Cpath d='M256 50v45M256 50l25 15-25 15' stroke='%234d7c0f' stroke-width='8' stroke-linecap='round' fill='%234d7c0f'/%3E%3Cpath d='M180 145l76-45 76 45' stroke='%2378350f' stroke-width='10' stroke-linecap='round' fill='none'/%3E%3Crect x='140' y='155' width='18' height='130' rx='5' fill='%2392400e'/%3E%3Crect x='354' y='155' width='18' height='130' rx='5' fill='%2392400e'/%3E%3Cpath d='M175 285 C175 155, 337 155, 337 285 Z' fill='%23e0f2fe' stroke='%2378350f' stroke-width='8'/%3E%3Crect x='115' y='285' width='282' height='26' rx='10' fill='%2378350f'/%3E%3Cpath d='M235 235c0-12 10-22 21-22s21 10 21 22v25c0 8-10 15-21 15s-21-7-21-15z' fill='%23451a03'/%3E%3Cpath d='M246 215c-18-22-28-15-38-15m66 15c18-22 28-15 38-15' stroke='%23451a03' stroke-width='9' stroke-linecap='round' fill='none'/%3E%3Ctext x='256' y='388' font-family='Arial Black, sans-serif' font-weight='900' font-size='62' text-anchor='middle'%3E%3Ctspan fill='%2315803d'%3EMy%3C/tspan%3E%3Ctspan fill='%23166534'%3E昆%3C/tspan%3E%3Ctspan fill='%23b45309'%3E虫%3C/tspan%3E%3Ctspan fill='%231d4ed8'%3E館%3C/tspan%3E%3C/text%3E%3C/svg%3E">
+  
+  <!-- Web App Manifest (Data URI形式で埋め込み) -->
+  <link rel="manifest" href="data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22My%E6%98%86%E8%99%AB%E9%A4%A8%22%2C%22short_name%22%3A%22My%E6%98%86%E8%99%AB%E9%A4%A8%22%2C%22description%22%3A%22AI%E6%98%86%E8%99%AB%E5%88%A4%E5%AE%9A%E3%81%A83D%E5%B1%95%E7%A4%BA%E5%AE%A4%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23fdfbf7%22%2C%22theme_color%22%3A%22%23065f46%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%20512%20512'%253E%253Crect%20width%3D'512'%20height%3D'512'%20rx%3D'110'%20fill%3D'%2523fdfbf7'%2F%253E%253Cpath%20d%3D'M256%2050v45M256%2050l25%2015-25%2015'%20stroke%3D'%25234d7c0f'%20stroke-width%3D'8'%20stroke-linecap%3D'round'%20fill%3D'%25234d7c0f'%2F%253E%253Cpath%20d%3D'M180%20145l76-45%2076%2045'%20stroke%3D'%252378350f'%20stroke-width%3D'10'%20stroke-linecap%3D'round'%20fill%3D'none'%2F%253E%253Crect%20x%3D'140'%20y%3D'155'%20width%3D'18'%20height%3D'130'%20rx%3D'5'%20fill%3D'%252392400e'%2F%253E%253Crect%20x%3D'354'%20y%3D'155'%20width%3D'18'%20height%3D'130'%20rx%3D'5'%20fill%3D'%252392400e'%2F%253E%253Cpath%20d%3D'M175%20285%20C175%20155%2C%20337%20155%2C%20337%20285%20Z'%20fill%3D'%2523e0f2fe'%20stroke%3D'%252378350f'%20stroke-width%3D'8'%2F%253E%253Crect%20x%3D'115'%20y%3D'285'%20width%3D'282'%20height%3D'26'%20rx%3D'10'%20fill%3D'%252378350f'%2F%253E%253Cpath%20d%3D'M235%20235c0-12%2010-22%2021-22s21%2010%2021%2022v25c0%208-10%2015-21%2015s-21-7-21-15z'%20fill%3D'%2523451a03'%2F%253E%253Cpath%20d%3D'M246%20215c-18-22-28-15-38-15m66%2015c18-22%2028-15%2038-15'%20stroke%3D'%2523451a03'%20stroke-width%3D'9'%20stroke-linecap%3D'round'%20fill%3D'none'%2F%253E%253Ctext%20x%3D'256'%20y%3D'388'%20font-family%3D'Arial%20Black%2C%20sans-serif'%20font-weight%3D'900'%20font-size%3D'62'%20text-anchor%3D'middle'%253E%253Ctspan%20fill%3D'%252315803d'%253EMy%253C%2Ftspan%253E%253Ctspan%20fill%3D'%2523166534'%253E%E6%98%B6%253C%2Ftspan%253E%253Ctspan%20fill%3D'%2523b45309'%253E%E8%99%AB%253C%2Ftspan%253E%253Ctspan%20fill%3D'%25231d4ed8'%253E%E9%A4%A8%253C%2Ftspan%253E%253C%2Ftext%253E%253C%2Fsvg%253E%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%7D">
+
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   
@@ -15,7 +29,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 
-  <!-- TensorFlow.js & MobileNet (No API Key Required) -->
+  <!-- TensorFlow.js & MobileNet (完全ローカル・APIキー不要のAI判定) -->
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.21.0/dist/tf.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@2.1.0/dist/mobilenet.min.js"></script>
 
@@ -105,15 +119,21 @@
           <i class="fa-solid fa-bug text-lg"></i>
         </div>
         <div>
-          <h1 class="text-lg md:text-xl font-black tracking-wider leading-none">
+          <h1 class="text-lg md:text-xl font-black tracking-wider leading-none" id="app-title">
             <ruby>My<rt>まい</rt></ruby><ruby>昆虫館<rt>こんちゅうかん</rt></ruby>
           </h1>
         </div>
       </div>
       
       <div class="flex items-center gap-2">
-        <!-- ふりがな切替トグル -->
-        <label class="flex items-center cursor-pointer gap-1.5 bg-emerald-900/80 px-2.5 py-1 rounded-full border border-emerald-700">
+        <!-- 言語切り替えボタン -->
+        <button onclick="toggleLanguage()" class="flex items-center gap-1 bg-emerald-900/90 hover:bg-emerald-950 px-2.5 py-1 rounded-full border border-emerald-700 text-xs font-bold transition">
+          <i class="fa-solid fa-globe text-amber-400"></i>
+          <span id="lang-btn-text">English</span>
+        </button>
+
+        <!-- ふりがな切替トグル（日本語のみ有効） -->
+        <label id="ruby-container" class="flex items-center cursor-pointer gap-1.5 bg-emerald-900/80 px-2.5 py-1 rounded-full border border-emerald-700">
           <span class="text-xs font-bold"><ruby>振<rt>ふ</rt></ruby>りがな</span>
           <div class="relative inline-block w-7 h-4 align-middle select-none">
             <input type="checkbox" name="toggle" id="ruby-toggle" class="toggle-checkbox absolute block w-4 h-4 rounded-full bg-amber-400 appearance-none cursor-pointer transition-transform duration-200 ease-in-out z-10" style="top:0; left:0;"/>
@@ -127,13 +147,13 @@
     <nav class="bg-emerald-900 border-t border-emerald-800 flex justify-center">
       <div class="container mx-auto px-1 flex text-sm">
         <button onclick="switchTab('tab-museum')" class="flex-1 tab-btn active py-3 text-emerald-100 hover:text-white border-b-4 border-amber-400 font-bold transition flex justify-center items-center gap-1.5" data-target="tab-museum">
-          <i class="fa-solid fa-person-walking text-amber-400"></i> <ruby>展示室<rt>てんじしつ</rt></ruby>
+          <i class="fa-solid fa-person-walking text-amber-400"></i> <span id="tab-museum-txt"><ruby>展示室<rt>てんじしつ</rt></ruby></span>
         </button>
         <button onclick="switchTab('tab-register')" class="flex-1 tab-btn py-3 text-emerald-200 hover:text-white border-b-4 border-transparent font-bold transition flex justify-center items-center gap-1.5" data-target="tab-register">
-          <i class="fa-solid fa-camera"></i> AI<ruby>判定<rt>はんてい</rt></ruby>
+          <i class="fa-solid fa-camera"></i> <span id="tab-ai-txt">AI<ruby>判定<rt>はんてい</rt></ruby></span>
         </button>
         <button onclick="switchTab('tab-dictionary')" class="flex-1 tab-btn py-3 text-emerald-200 hover:text-white border-b-4 border-transparent font-bold transition flex justify-center items-center gap-1.5" data-target="tab-dictionary">
-          <i class="fa-solid fa-book-open"></i> <ruby>図鑑<rt>ずかん</rt></ruby>
+          <i class="fa-solid fa-book-open"></i> <span id="tab-dict-txt"><ruby>図鑑<rt>ずかん</rt></ruby></span>
         </button>
       </div>
     </nav>
@@ -151,11 +171,11 @@
             <button onclick="editMuseumName()" class="text-slate-400 hover:text-emerald-600 ml-1"><i class="fa-solid fa-pen text-xs"></i></button>
           </h2>
           <span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full font-bold">
-            <ruby>展示<rt>てんじ</rt></ruby>: <span id="display-insect-count" class="text-emerald-700 font-bold">0</span> <ruby>匹<rt>ひき</rt></ruby>
+            <span id="label-exhibit-count"><ruby>展示<rt>てんじ</rt></ruby></span>: <span id="display-insect-count" class="text-emerald-700 font-bold">0</span> <span id="unit-count"><ruby>匹<rt>ひき</rt></ruby></span>
           </span>
         </div>
         <div class="flex items-center gap-1.5">
-          <span class="text-slate-500 font-bold"><ruby>服<rt>ふく</rt></ruby>:</span>
+          <span id="label-outfit" class="text-slate-500 font-bold"><ruby>服<rt>ふく</rt></ruby>:</span>
           <button onclick="changeAvatarColor(0x2563eb)" class="w-5 h-5 rounded-full bg-blue-600 border border-white shadow"></button>
           <button onclick="changeAvatarColor(0xd97706)" class="w-5 h-5 rounded-full bg-amber-600 border border-white shadow"></button>
           <button onclick="changeAvatarColor(0x16a34a)" class="w-5 h-5 rounded-full bg-green-600 border border-white shadow"></button>
@@ -167,8 +187,8 @@
         <div id="three-canvas-container" class="w-full h-full"></div>
         
         <div class="absolute top-3 left-3 bg-slate-900/80 text-white px-3 py-1.5 rounded-lg backdrop-blur border border-white/10 text-[11px] pointer-events-none z-10">
-          <p class="text-amber-300 font-bold"><i class="fa-solid fa-hand-pointer"></i> <ruby>操作方法<rt>そうさほうほう</rt></ruby></p>
-          <p><ruby>左下<rt>ひだりした</rt></ruby>: <ruby>移動<rt>いどう</rt></ruby> / <ruby>右側<rt>みぎがわ</rt></ruby>: <ruby>視点<rt>してん</rt></ruby><ruby>回転<rt>かいてん</rt></ruby></p>
+          <p class="text-amber-300 font-bold"><i class="fa-solid fa-hand-pointer"></i> <span id="label-controls"><ruby>操作方法<rt>そうさほうほう</rt></ruby></span></p>
+          <p id="label-controls-desc"><ruby>左下<rt>ひだりした</rt></ruby>: <ruby>移動<rt>いどう</rt></ruby> / <ruby>右側<rt>みぎがわ</rt></ruby>: <ruby>視点<rt>してん</rt></ruby><ruby>回転<rt>かいてん</rt></ruby></p>
         </div>
 
         <div id="camera-touch-zone" class="camera-touch-zone"></div>
@@ -176,7 +196,7 @@
         <div id="interact-btn-container" class="absolute bottom-5 right-5 hidden z-30">
           <button id="interact-btn" onclick="inspectCurrentTarget()" class="bg-amber-400 hover:bg-amber-300 text-slate-900 font-black px-5 py-3 rounded-full shadow-2xl border-2 border-white flex items-center gap-2 animate-bounce">
             <i class="fa-solid fa-magnifying-glass text-base"></i>
-            <span class="text-xs"><ruby>昆虫<rt>こんちゅう</rt></ruby>を<ruby>拡大観察<rt>かくだいかんさつ</rt></ruby></span>
+            <span id="label-inspect-btn" class="text-xs"><ruby>昆虫<rt>こんちゅう</rt></ruby>を<ruby>拡大観察<rt>かくだいかんさつ</rt></ruby></span>
           </button>
         </div>
 
@@ -189,15 +209,15 @@
     <!-- 画面2: 昆虫登録＆AI判定 -->
     <section id="tab-register" class="tab-content">
       <div class="bg-white rounded-2xl shadow-sm p-6 text-center max-w-lg mx-auto border border-amber-100 mt-4">
-        <h2 class="text-xl font-black text-emerald-900 mb-2">AIで<ruby>昆虫<rt>こんちゅう</rt></ruby>を<ruby>判定<rt>はんてい</rt></ruby></h2>
-        <p class="text-slate-500 text-xs mb-6"><ruby>写真<rt>しゃしん</rt></ruby>を<ruby>撮<rt>と</rt></ruby>ると、ブラウザ内蔵の無料AIが<ruby>種類<rt>しゅるい</rt></ruby>を<ruby>特定<rt>とくてい</rt></ruby>します。（通信不要・設定不要）</p>
+        <h2 id="ai-title" class="text-xl font-black text-emerald-900 mb-2">AIで<ruby>昆虫<rt>こんちゅう</rt></ruby>を<ruby>判定<rt>はんてい</rt></ruby></h2>
+        <p id="ai-desc" class="text-slate-500 text-xs mb-6"><ruby>写真<rt>しゃしん</rt></ruby>を<ruby>撮<rt>と</rt></ruby>ると、ブラウザ内蔵の無料AIが<ruby>種類<rt>しゅるい</rt></ruby>を<ruby>特定<rt>とくてい</rt></ruby>します。（通信不要・設定不要）</p>
         
         <div class="border-4 border-dashed border-emerald-300 rounded-2xl p-10 mb-5 bg-emerald-50/50 hover:bg-emerald-50 transition cursor-pointer" onclick="document.getElementById('file-upload').click()">
           <div class="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <i class="fa-solid fa-camera text-4xl text-emerald-600"></i>
           </div>
-          <p class="font-bold text-lg text-emerald-900"><ruby>写真<rt>しゃしん</rt></ruby>を<ruby>撮影<rt>さつえい</rt></ruby>・<ruby>選<rt>えら</rt></ruby>ぶ</p>
-          <p class="text-[11px] text-slate-400 mt-2">タップしてカメラを<ruby>起動<rt>きどう</rt></ruby></p>
+          <p id="label-upload-title" class="font-bold text-lg text-emerald-900"><ruby>写真<rt>しゃしん</rt></ruby>を<ruby>撮影<rt>さつえい</rt></ruby>・<ruby>選<rt>えら</rt></ruby>ぶ</p>
+          <p id="label-upload-sub" class="text-[11px] text-slate-400 mt-2">タップしてカメラを<ruby>起動<rt>きどう</rt></ruby></p>
         </div>
         <!-- 判定用の隠し画像 -->
         <img id="offscreen-image" style="display:none;" crossorigin="anonymous">
@@ -208,9 +228,9 @@
     <!-- 画面3: 精密昆虫図鑑 -->
     <section id="tab-dictionary" class="tab-content">
       <div class="flex justify-between items-center mb-4 mt-2">
-        <h2 class="text-lg font-black text-emerald-900"><ruby>精密<rt>せいみつ</rt></ruby><ruby>昆虫図鑑<rt>こんちゅうずかん</rt></ruby></h2>
+        <h2 id="dict-title" class="text-lg font-black text-emerald-900"><ruby>精密<rt>せいみつ</rt></ruby><ruby>昆虫図鑑<rt>こんちゅうずかん</rt></ruby></h2>
         <div class="bg-emerald-100 text-emerald-800 font-bold px-3 py-1 rounded-lg text-xs">
-          <ruby>登録<rt>とうろく</rt></ruby>: <span id="dict-progress" class="text-emerald-700 font-bold">0</span><ruby>匹<rt>ひき</rt></ruby>
+          <span id="label-registered"><ruby>登録<rt>とうろく</rt></ruby></span>: <span id="dict-progress" class="text-emerald-700 font-bold">0</span><span id="unit-count-dict"><ruby>匹<rt>ひき</rt></ruby></span>
         </div>
       </div>
       
@@ -220,9 +240,7 @@
     </section>
   </main>
 
-  <!-- ================= モーダル群 ================= -->
-
-  <!-- ロードモーダル -->
+  <!-- モーダル群 -->
   <div id="modal-loading" class="fixed inset-0 modal-overlay z-50 hidden flex items-center justify-center">
     <div class="bg-white p-6 rounded-2xl shadow-xl text-center max-w-xs mx-4">
       <div class="w-12 h-12 border-4 border-emerald-200 border-t-emerald-600 rounded-full animate-spin mx-auto mb-3"></div>
@@ -231,29 +249,26 @@
     </div>
   </div>
 
-  <!-- エラーモーダル -->
   <div id="modal-error" class="fixed inset-0 modal-overlay z-50 hidden flex items-center justify-center p-4">
     <div class="bg-white rounded-2xl shadow-xl w-full max-w-xs overflow-hidden text-center p-6">
       <i class="fa-solid fa-triangle-exclamation text-4xl text-red-500 mb-3"></i>
-      <h3 class="font-bold text-slate-800 mb-2"><ruby>判定失敗<rt>はんていしっぱい</rt></ruby></h3>
+      <h3 id="error-title" class="font-bold text-slate-800 mb-2"><ruby>判定失敗<rt>はんていしっぱい</rt></ruby></h3>
       <p id="error-message" class="text-xs text-slate-600 mb-4"><ruby>画像<rt>がぞう</rt></ruby>の<ruby>読<rt>よ</rt></ruby>み<ruby>込<rt>こ</rt></ruby>みに<ruby>失敗<rt>しっぱい</rt></ruby>しました。</p>
-      <button onclick="closeModal('modal-error')" class="bg-slate-200 text-slate-800 font-bold py-2 px-6 rounded-lg text-xs">閉じる</button>
+      <button onclick="closeModal('modal-error')" id="btn-close-error" class="bg-slate-200 text-slate-800 font-bold py-2 px-6 rounded-lg text-xs">閉じる</button>
     </div>
   </div>
 
-  <!-- AI判定結果確認＆記録モーダル -->
   <div id="modal-record" class="fixed inset-0 modal-overlay z-50 hidden flex items-center justify-center p-4">
     <div class="bg-white rounded-2xl shadow-xl w-full max-w-sm overflow-hidden flex flex-col max-h-[90vh]">
       <div class="bg-emerald-800 px-4 py-3 text-white flex justify-between items-center flex-shrink-0">
-        <h3 class="font-bold text-sm"><ruby>解析結果<rt>かいせきけっか</rt></ruby>と<ruby>記録<rt>きろく</rt></ruby></h3>
+        <h3 id="modal-record-title" class="font-bold text-sm"><ruby>解析結果<rt>かいせきけっか</rt></ruby>と<ruby>記録<rt>きろく</rt></ruby></h3>
         <button onclick="closeModal('modal-record')" class="text-white"><i class="fa-solid fa-xmark"></i></button>
       </div>
       
       <div class="p-4 overflow-y-auto">
         <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-3 mb-4 text-center">
-          <p class="text-[10px] font-bold text-emerald-600 mb-1">AIの<ruby>見<rt>み</rt></ruby>たもの</p>
+          <p id="label-ai-saw" class="text-[10px] font-bold text-emerald-600 mb-1">AIの<ruby>見<rt>み</rt></ruby>たもの</p>
           
-          <!-- 判定した画像のプレビューエリア -->
           <div class="w-full flex justify-center mb-3">
             <img id="ai-preview-img" src="" alt="プレビュー" class="max-h-32 rounded-lg shadow-sm border border-emerald-200 object-contain hidden">
           </div>
@@ -269,40 +284,40 @@
           <input type="hidden" id="record-desc">
           
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1"><ruby>名前<rt>なまえ</rt></ruby>（<ruby>修正<rt>しゅうせい</rt></ruby>できます）</label>
+            <label id="label-form-name" class="block text-xs font-bold text-slate-700 mb-1"><ruby>名前<rt>なまえ</rt></ruby>（<ruby>修正<rt>しゅうせい</rt></ruby>できます）</label>
             <input type="text" id="edit-record-name" class="w-full border border-slate-300 rounded-lg px-2 py-1.5 text-xs outline-none focus:border-emerald-500" required>
           </div>
           
           <div class="grid grid-cols-2 gap-2">
             <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1"><ruby>発見日<rt>はっけんび</rt></ruby></label>
+              <label id="label-form-date" class="block text-xs font-bold text-slate-700 mb-1"><ruby>発見日<rt>はっけんび</rt></ruby></label>
               <input type="date" id="record-date" class="w-full border border-slate-300 rounded-lg px-2 py-1.5 text-[11px] outline-none" required>
             </div>
             <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1">3Dモデルの<ruby>形<rt>かたち</rt></ruby></label>
+              <label id="label-form-type" class="block text-xs font-bold text-slate-700 mb-1">3Dモデルの<ruby>形<rt>かたち</rt></ruby></label>
               <select id="edit-record-type" class="w-full border border-slate-300 rounded-lg px-2 py-1.5 text-xs outline-none">
-                <option value="beetle">カブトムシ<ruby>系<rt>けい</rt></ruby></option>
-                <option value="stag_beetle">クワガタ<ruby>系<rt>けい</rt></ruby></option>
-                <option value="butterfly">チョウ<ruby>系<rt>けい</rt></ruby></option>
-                <option value="other">その他</option>
+                <option value="beetle" id="opt-beetle">カブトムシ系</option>
+                <option value="stag_beetle" id="opt-stag">クワガタ系</option>
+                <option value="butterfly" id="opt-butterfly">チョウ系</option>
+                <option value="other" id="opt-other">その他</option>
               </select>
             </div>
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1"><ruby>場所<rt>ばしょ</rt></ruby></label>
+            <label id="label-form-location" class="block text-xs font-bold text-slate-700 mb-1"><ruby>場所<rt>ばしょ</rt></ruby></label>
             <select id="record-pref" class="w-full border border-slate-300 rounded-lg px-2 py-1.5 text-xs outline-none">
-              <option value="東京都">東京都</option>
-              <option value="北海道">北海道</option>
-              <option value="長野県">長野県</option>
-              <option value="大阪府">大阪府</option>
-              <option value="その他">その他</option>
+              <option value="東京都">東京都 / Tokyo</option>
+              <option value="北海道">北海道 / Hokkaido</option>
+              <option value="長野県">長野県 / Nagano</option>
+              <option value="大阪府">大阪府 / Osaka</option>
+              <option value="その他">その他 / Other</option>
             </select>
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1"><ruby>観察メモ<rt>かんさつめも</rt></ruby> (<ruby>任意<rt>にんい</rt></ruby>)</label>
-            <textarea id="record-memo" rows="2" class="w-full border border-slate-300 rounded-lg px-2 py-1.5 text-xs outline-none" placeholder="木にとまっていた！"></textarea>
+            <label id="label-form-memo" class="block text-xs font-bold text-slate-700 mb-1"><ruby>観察メモ<rt>かんさつめも</rt></ruby> (<ruby>任意<rt>にんい</rt></ruby>)</label>
+            <textarea id="record-memo" rows="2" class="w-full border border-slate-300 rounded-lg px-2 py-1.5 text-xs outline-none" placeholder="木にとまっていた！ / Found on a tree!"></textarea>
           </div>
-          <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-2.5 rounded-lg text-sm shadow-md transition">
+          <button type="submit" id="btn-submit-record" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-2.5 rounded-lg text-sm shadow-md transition">
             <ruby>展示室<rt>てんじしつ</rt></ruby>に<ruby>追加<rt>ついか</rt></ruby>する
           </button>
         </form>
@@ -310,27 +325,23 @@
     </div>
   </div>
 
-  <!-- 【白背景・ズーム対応】3D精密拡大観察モーダル -->
   <div id="modal-3d-detail" class="fixed inset-0 modal-overlay z-50 hidden flex items-center justify-center p-3">
     <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl h-[85vh] flex flex-col md:flex-row overflow-hidden border border-slate-200">
-      
-      <!-- 3D観察ビューア -->
       <div id="detail-3d-container" class="w-full md:w-3/5 h-1/2 md:h-full bg-white relative border-b md:border-b-0 md:border-r border-slate-100">
         <div id="detail-three-canvas" class="w-full h-full"></div>
         <div class="absolute top-3 left-3 bg-slate-100/90 text-slate-700 px-3 py-1.5 rounded-lg text-[10px] font-bold border border-slate-200 pointer-events-none shadow-sm">
-          <p class="text-emerald-700 mb-0.5"><i class="fa-solid fa-arrows-rotate"></i> 1<ruby>本指<rt>ほんゆび</rt></ruby>で<ruby>回転<rt>かいてん</rt></ruby></p>
-          <p><i class="fa-solid fa-magnifying-glass-plus"></i> 2<ruby>本指<rt>ほんゆび</rt></ruby>ピンチでズーム</p>
+          <p id="label-detail-rotate" class="text-emerald-700 mb-0.5"><i class="fa-solid fa-arrows-rotate"></i> 1<ruby>本指<rt>ほんゆび</rt></ruby>で<ruby>回転<rt>かいてん</rt></ruby></p>
+          <p id="label-detail-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i> 2<ruby>本指<rt>ほんゆび</rt></ruby>ピンチでズーム</p>
         </div>
         <button onclick="closeModal('modal-3d-detail')" class="absolute top-3 right-3 text-slate-400 hover:text-slate-800 text-2xl md:hidden z-10">
           <i class="fa-solid fa-circle-xmark"></i>
         </button>
       </div>
       
-      <!-- 解説・記録パネル -->
       <div class="w-full md:w-2/5 h-1/2 md:h-full bg-slate-50 p-4 flex flex-col justify-between overflow-y-auto">
         <div>
           <div class="hidden md:flex justify-between items-center mb-2">
-            <span class="bg-emerald-100 text-emerald-800 font-bold text-[10px] px-2 py-0.5 rounded"><ruby>精密3D標本<rt>せいみつすりーでぃーひょうほん</rt></ruby></span>
+            <span id="label-detail-badge" class="bg-emerald-100 text-emerald-800 font-bold text-[10px] px-2 py-0.5 rounded"><ruby>精密3D標本<rt>せいみつすりーでぃーひょうほん</rt></ruby></span>
             <button onclick="closeModal('modal-3d-detail')" class="text-slate-400 hover:text-slate-800 text-xl"><i class="fa-solid fa-xmark"></i></button>
           </div>
           
@@ -339,34 +350,151 @@
           
           <div class="space-y-2 text-xs">
             <div class="bg-emerald-50/50 p-2.5 rounded-xl border border-emerald-100 shadow-sm">
-              <span class="text-emerald-700 font-bold block text-[10px] mb-0.5"><i class="fa-solid fa-robot"></i> AI<ruby>解説<rt>かいせつ</rt></ruby></span>
+              <span id="label-detail-ai" class="text-emerald-700 font-bold block text-[10px] mb-0.5"><i class="fa-solid fa-robot"></i> AI<ruby>解説<rt>かいせつ</rt></ruby></span>
               <p id="detail-ai-desc" class="text-slate-700 leading-relaxed"></p>
             </div>
 
             <div class="bg-white p-2.5 rounded-xl border border-slate-200 shadow-sm">
-              <span class="text-slate-400 font-bold block text-[10px] mb-0.5"><ruby>発見データ<rt>はっけんでーた</rt></ruby></span>
+              <span id="label-detail-data" class="text-slate-400 font-bold block text-[10px] mb-0.5"><ruby>発見データ<rt>はっけんでーた</rt></ruby></span>
               <p><i class="fa-regular fa-calendar text-slate-400 mr-1"></i> <span id="detail-date"></span></p>
               <p class="mt-0.5"><i class="fa-solid fa-location-dot text-slate-400 mr-1"></i> <span id="detail-pref"></span></p>
             </div>
             
             <div class="bg-white p-2.5 rounded-xl border border-slate-200 shadow-sm">
-              <span class="text-slate-400 font-bold block text-[10px] mb-0.5"><ruby>観察メモ<rt>かんさつめも</rt></ruby></span>
+              <span id="label-detail-memo-title" class="text-slate-400 font-bold block text-[10px] mb-0.5"><ruby>観察メモ<rt>かんさつめも</rt></ruby></span>
               <p id="detail-memo" class="text-slate-700 leading-relaxed"></p>
             </div>
           </div>
         </div>
         
-        <button onclick="closeModal('modal-3d-detail')" class="w-full mt-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 rounded-xl text-xs shadow transition">
+        <button onclick="closeModal('modal-3d-detail')" id="btn-back-museum" class="w-full mt-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 rounded-xl text-xs shadow transition">
           <ruby>展示室<rt>てんじしつ</rt></ruby>へ<ruby>戻<rt>もど</rt></ruby>る
         </button>
       </div>
     </div>
   </div>
 
-  <!-- ================= JavaScriptロジック ================= -->
+  <!-- JavaScriptロジック -->
   <script>
+    // --- Service Worker のインライン登録（PWA化対応） ---
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        const swCode = `
+          self.addEventListener('install', (e) => self.skipWaiting());
+          self.addEventListener('activate', (e) => self.clients.claim());
+          self.addEventListener('fetch', (e) => e.respondWith(fetch(e.request)));
+        `;
+        const blob = new Blob([swCode], { type: 'application/javascript' });
+        const swUrl = URL.createObjectURL(blob);
+        navigator.serviceWorker.register(swUrl).catch(() => {});
+      });
+    }
+
+    /* --- 多言語対応テキスト辞書 --- */
+    const i18n = {
+      ja: {
+        appTitle: '<ruby>My<rt>まい</rt></ruby><ruby>昆虫館<rt>こんちゅうかん</rt></ruby>',
+        langBtn: 'English',
+        tabMuseum: '<ruby>展示室<rt>てんじしつ</rt></ruby>',
+        tabAi: 'AI<ruby>判定<rt>はんてい</rt></ruby>',
+        tabDict: '<ruby>図鑑<rt>ずかん</rt></ruby>',
+        defaultMuseumName: 'わたしの<ruby>昆虫館<rt>こんちゅうかん</rt></ruby>',
+        exhibitCount: '<ruby>展示<rt>てんじ</rt></ruby>',
+        unitCount: '<ruby>匹<rt>ひき</rt></ruby>',
+        outfit: '<ruby>服<rt>ふく</rt></ruby>:',
+        controlsTitle: '<ruby>操作方法<rt>そうさほうほう</rt></ruby>',
+        controlsDesc: '<ruby>左下<rt>ひだりした</rt></ruby>: <ruby>移動<rt>いどう</rt></ruby> / <ruby>右側<rt>みぎがわ</rt></ruby>: <ruby>視点<rt>してん</rt></ruby><ruby>回転<rt>かいてん</rt></ruby>',
+        inspectBtn: '<ruby>昆虫<rt>こんちゅう</rt></ruby>を<ruby>拡大観察<rt>かくだいかんさつ</rt></ruby>',
+        aiTitle: 'AIで<ruby>昆虫<rt>こんちゅう</rt></ruby>を<ruby>判定<rt>はんてい</rt></ruby>',
+        aiDesc: '<ruby>写真<rt>しゃしん</rt></ruby>を<ruby>撮<rt>と</rt></ruby>ると、ブラウザ内蔵の無料AIが<ruby>種類<rt>しゅるい</rt></ruby>を<ruby>特定<rt>とくてい</rt></ruby>します。（通信不要・設定不要）',
+        uploadTitle: '<ruby>写真<rt>しゃしん</rt></ruby>を<ruby>撮影<rt>さつえい</rt></ruby>・<ruby>選<rt>えら</rt></ruby>ぶ',
+        uploadSub: 'タップしてカメラを<ruby>起動<rt>きどう</rt></ruby>',
+        dictTitle: '<ruby>精密<rt>せいみつ</rt></ruby><ruby>昆虫図鑑<rt>こんちゅうずかん</rt></ruby>',
+        registered: '<ruby>登録<rt>とうろく</rt></ruby>',
+        loadingTitle: 'AI<ruby>準備中<rt>じゅんびちゅう</rt></...>',
+        loadingDesc: '初回はモデルの読み込みに少し時間がかかります',
+        loadingAnalyzingTitle: 'AI<ruby>解析中<rt>かいせきちゅう</rt></...>',
+        loadingAnalyzingDesc: '画像から特徴を読み取っています',
+        errorTitle: '<ruby>判定失敗<rt>はんていしっぱい</rt></ruby>',
+        errorMsg: '<ruby>画像<rt>がぞう</rt></ruby>の<ruby>読<rt>よ</rt></ruby>み<ruby>込<rt>こ</rt></ruby>みに<ruby>失敗<rt>しっぱい</rt></ruby>しました。',
+        btnClose: '閉じる',
+        recordTitle: '<ruby>解析結果<rt>かいせきけっか</rt></ruby>と<ruby>記録<rt>きろく</rt></ruby>',
+        aiSaw: 'AIの<ruby>見<rt>み</rt></ruby>たもの',
+        formName: '<ruby>名前<rt>なまえ</rt></ruby>（<ruby>修正<rt>しゅうせい</rt></ruby>できます）',
+        formDate: '<ruby>発見日<rt>はっけんび</rt></ruby>',
+        formType: '3Dモデルの<ruby>形<rt>かたち</rt></ruby>',
+        formLocation: '<ruby>場所<rt>ばしょ</rt></ruby>',
+        formMemo: '<ruby>観察メモ<rt>かんさつめも</rt></ruby> (<ruby>任意<rt>にんい</rt></ruby>)',
+        optBeetle: 'カブトムシ系',
+        optStag: 'クワガタ系',
+        optButterfly: 'チョウ系',
+        optOther: 'その他',
+        btnSubmitRecord: '<ruby>展示室<rt>てんじしつ</rt></ruby>に<ruby>追加<rt>ついか</rt></ruby>する',
+        detailRotate: '<i class="fa-solid fa-arrows-rotate"></i> 1<ruby>本指<rt>ほんゆび</rt></ruby>で<ruby>回転<rt>かいてん</rt></ruby>',
+        detailZoom: '<i class="fa-solid fa-magnifying-glass-plus"></i> 2<ruby>本指<rt>ほんゆび</rt></ruby>ピンチでズーム',
+        detailBadge: '<ruby>精密3D標本<rt>せいみつすりーでぃーひょうほん</rt></ruby>',
+        detailAi: '<i class="fa-solid fa-robot"></i> AI<ruby>解説<rt>かいせつ</rt></ruby>',
+        detailData: '<ruby>発見データ<rt>はっけんでーた</rt></ruby>',
+        detailMemoTitle: '<ruby>観察メモ<rt>かんさつめも</rt></ruby>',
+        btnBackMuseum: '<ruby>展示室<rt>てんじしつ</rt></ruby>へ<ruby>戻<rt>もど</rt></ruby>る',
+        defaultInsectName: '<ruby>大和兜虫<rt>ヤマトカブトムシ</rt></ruby>',
+        defaultInsectDesc: '<ruby>日本<rt>にほん</rt></ruby>を<ruby>代表<rt>だいひょう</rt></ruby>する<ruby>昆虫<rt>こんちゅう</rt></ruby>です。',
+        promptName: '昆虫館の名前を入力してください'
+      },
+      en: {
+        appTitle: 'My Insect Museum',
+        langBtn: '日本語',
+        tabMuseum: 'Exhibition',
+        tabAi: 'AI Identify',
+        tabDict: 'Encyclopedia',
+        defaultMuseumName: 'My Museum',
+        exhibitCount: 'Exhibits',
+        unitCount: '',
+        outfit: 'Outfit:',
+        controlsTitle: 'Controls',
+        controlsDesc: 'Bottom-Left: Move / Right Side: Rotate Camera',
+        inspectBtn: 'Inspect Insect 3D',
+        aiTitle: 'Identify Insects with AI',
+        aiDesc: 'Take a photo and the built-in free AI will identify the species locally on your browser!',
+        uploadTitle: 'Take / Choose Photo',
+        uploadSub: 'Tap to open camera',
+        dictTitle: '3D Insect Encyclopedia',
+        registered: 'Registered',
+        loadingTitle: 'Preparing AI...',
+        loadingDesc: 'It may take a moment to load the model for the first time.',
+        loadingAnalyzingTitle: 'Analyzing Photo...',
+        loadingAnalyzingDesc: 'Extracting features from the image...',
+        errorTitle: 'Recognition Failed',
+        errorMsg: 'Failed to process the image.',
+        btnClose: 'Close',
+        recordTitle: 'Analysis & Record',
+        aiSaw: 'AI Prediction',
+        formName: 'Name (Editable)',
+        formDate: 'Date Found',
+        formType: '3D Model Shape',
+        formLocation: 'Location',
+        formMemo: 'Observation Note (Optional)',
+        optBeetle: 'Beetle Type',
+        optStag: 'Stag Beetle Type',
+        optButterfly: 'Butterfly Type',
+        optOther: 'Other Type',
+        btnSubmitRecord: 'Add to Exhibition',
+        detailRotate: '<i class="fa-solid fa-arrows-rotate"></i> Drag 1 finger to rotate',
+        detailZoom: '<i class="fa-solid fa-magnifying-glass-plus"></i> Pinch 2 fingers to zoom',
+        detailBadge: '3D Specimen',
+        detailAi: '<i class="fa-solid fa-robot"></i> AI Explanation',
+        detailData: 'Discovery Data',
+        detailMemoTitle: 'Observation Note',
+        btnBackMuseum: 'Back to Exhibition',
+        defaultInsectName: 'Japanese Rhinoceros Beetle',
+        defaultInsectDesc: 'A famous horned beetle species representative of Japan.',
+        promptName: 'Enter your museum name'
+      }
+    };
+
     /* --- アプリケーション状態 --- */
     const state = {
+      lang: 'ja',
       isRubyOn: false,
       museumName: 'わたしの<ruby>昆虫館<rt>こんちゅうかん</rt></ruby>',
       avatarColor: 0x2563eb,
@@ -377,19 +505,18 @@
     let net = null; // MobileNetモデル保持用
 
     function loadData() {
-      // 昆虫データの読み込み
-      const saved = localStorage.getItem('myInsectsRealData_v6');
+      const saved = localStorage.getItem('myInsectsRealData_v7');
       if (saved) {
         state.insects = JSON.parse(saved);
       } else {
         state.insects = [
           { 
             id: '1', 
-            name: '<ruby>大和兜虫<rt>ヤマトカブトムシ</rt></ruby>', 
+            name: state.lang === 'ja' ? i18n.ja.defaultInsectName : i18n.en.defaultInsectName, 
             type: 'beetle', 
             sciName: 'Trypoxylus dichotomus',
-            desc: '<ruby>日本<rt>にほん</rt></ruby>を<ruby>代表<rt>だいひょう</rt></ruby>する<ruby>昆虫<rt>こんちゅう</rt></ruby>です。',
-            date: '2026-07-20', pref: '東京都', memo: 'かっこいい！' 
+            desc: state.lang === 'ja' ? i18n.ja.defaultInsectDesc : i18n.en.defaultInsectDesc,
+            date: '2026-07-20', pref: '東京都', memo: 'Cool beetle!' 
           }
         ];
         saveData();
@@ -398,18 +525,88 @@
     }
 
     function saveData() {
-      localStorage.setItem('myInsectsRealData_v6', JSON.stringify(state.insects));
+      localStorage.setItem('myInsectsRealData_v7', JSON.stringify(state.insects));
+    }
+
+    function toggleLanguage() {
+      state.lang = state.lang === 'ja' ? 'en' : 'ja';
+      
+      const rubyContainer = document.getElementById('ruby-container');
+      if (state.lang === 'en') {
+        rubyContainer.style.display = 'none';
+        document.body.classList.add('hide-ruby');
+      } else {
+        rubyContainer.style.display = 'flex';
+        if (!state.isRubyOn) document.body.classList.add('hide-ruby');
+        else document.body.classList.remove('hide-ruby');
+      }
+
+      applyLanguageTexts();
+      updateUI();
+      renderDictionary();
+    }
+
+    function applyLanguageTexts() {
+      const txt = i18n[state.lang];
+      
+      document.getElementById('app-title').innerHTML = txt.appTitle;
+      document.getElementById('lang-btn-text').innerText = txt.langBtn;
+      document.getElementById('tab-museum-txt').innerHTML = txt.tabMuseum;
+      document.getElementById('tab-ai-txt').innerHTML = txt.tabAi;
+      document.getElementById('tab-dict-txt').innerHTML = txt.tabDict;
+      
+      document.getElementById('label-exhibit-count').innerHTML = txt.exhibitCount;
+      document.getElementById('unit-count').innerHTML = txt.unitCount;
+      document.getElementById('unit-count-dict').innerHTML = txt.unitCount;
+      document.getElementById('label-outfit').innerHTML = txt.outfit;
+      document.getElementById('label-controls').innerHTML = txt.controlsTitle;
+      document.getElementById('label-controls-desc').innerHTML = txt.controlsDesc;
+      document.getElementById('label-inspect-btn').innerHTML = txt.inspectBtn;
+      
+      document.getElementById('ai-title').innerHTML = txt.aiTitle;
+      document.getElementById('ai-desc').innerHTML = txt.aiDesc;
+      document.getElementById('label-upload-title').innerHTML = txt.uploadTitle;
+      document.getElementById('label-upload-sub').innerHTML = txt.uploadSub;
+      
+      document.getElementById('dict-title').innerHTML = txt.dictTitle;
+      document.getElementById('label-registered').innerHTML = txt.registered;
+      
+      document.getElementById('error-title').innerHTML = txt.errorTitle;
+      document.getElementById('btn-close-error').innerText = txt.btnClose;
+      document.getElementById('modal-record-title').innerHTML = txt.recordTitle;
+      document.getElementById('label-ai-saw').innerHTML = txt.aiSaw;
+      document.getElementById('label-form-name').innerHTML = txt.formName;
+      document.getElementById('label-form-date').innerHTML = txt.formDate;
+      document.getElementById('label-form-type').innerHTML = txt.formType;
+      document.getElementById('label-form-location').innerHTML = txt.formLocation;
+      document.getElementById('label-form-memo').innerHTML = txt.formMemo;
+      
+      document.getElementById('opt-beetle').innerText = txt.optBeetle;
+      document.getElementById('opt-stag').innerText = txt.optStag;
+      document.getElementById('opt-butterfly').innerText = txt.optButterfly;
+      document.getElementById('opt-other').innerText = txt.optOther;
+      document.getElementById('btn-submit-record').innerHTML = txt.btnSubmitRecord;
+      
+      document.getElementById('label-detail-rotate').innerHTML = txt.detailRotate;
+      document.getElementById('label-detail-zoom').innerHTML = txt.detailZoom;
+      document.getElementById('label-detail-badge').innerHTML = txt.detailBadge;
+      document.getElementById('label-detail-ai').innerHTML = txt.detailAi;
+      document.getElementById('label-detail-data').innerHTML = txt.detailData;
+      document.getElementById('label-detail-memo-title').innerHTML = txt.detailMemoTitle;
+      document.getElementById('btn-back-museum').innerHTML = txt.btnBackMuseum;
     }
 
     function updateUI() {
-      document.getElementById('display-museum-name').innerHTML = state.museumName;
+      const txt = i18n[state.lang];
+      document.getElementById('display-museum-name').innerHTML = state.museumName || txt.defaultMuseumName;
       document.getElementById('display-insect-count').innerText = state.insects.length;
       document.getElementById('dict-progress').innerText = state.insects.length;
     }
 
     function editMuseumName() {
+      const txt = i18n[state.lang];
       const plainName = state.museumName.replace(/<rt>.*?<\/rt>/g, '').replace(/<ruby>|<\/ruby>/g, '');
-      const name = prompt('昆虫館の名前を入力してください', plainName);
+      const name = prompt(txt.promptName, plainName);
       if (name && name.trim()) {
         state.museumName = name.trim();
         saveData();
@@ -425,6 +622,7 @@
       });
       document.getElementById('record-date').value = new Date().toISOString().split('T')[0];
 
+      applyLanguageTexts();
       loadData();
       renderDictionary();
       initMainMuseum3D();
@@ -455,61 +653,93 @@
 
     function showError(msg) {
       document.getElementById('modal-loading').classList.add('hidden');
-      document.getElementById('error-message').innerHTML = msg;
+      document.getElementById('error-message').innerHTML = msg || i18n[state.lang].errorMsg;
       document.getElementById('modal-error').classList.remove('hidden');
     }
 
-    /* =========================================================================
-       TensorFlow.js (MobileNet) ローカル画像判定ロジック
-       ========================================================================= */
+    /* --- TensorFlow.js (MobileNet) ローカル画像判定 --- */
     async function loadModel() {
       if (!net) {
-        document.getElementById('loading-title').innerHTML = "AI<ruby>起動中<rt>きどうちゅう</rt></ruby>...";
-        document.getElementById('loading-desc').innerText = "AIエンジンをブラウザに読み込んでいます";
+        const txt = i18n[state.lang];
+        document.getElementById('loading-title').innerHTML = txt.loadingTitle;
+        document.getElementById('loading-desc').innerText = txt.loadingDesc;
         document.getElementById('modal-loading').classList.remove('hidden');
         try {
           net = await mobilenet.load({ version: 2, alpha: 1.0 });
         } catch (e) {
-          throw new Error("AIモデルの読み込みに失敗しました。インターネット接続を確認してください。");
+          throw new Error(state.lang === 'ja' ? "AIモデルの読み込みに失敗しました。" : "Failed to load AI model.");
         }
       }
     }
 
-    // 英語のクラス名から大まかな虫の分類と日本語名へのマッピング（簡易版）
     function mapClassNameToInsect(className) {
       const lowerClass = className.toLowerCase();
+      const isJa = state.lang === 'ja';
       
       if (lowerClass.includes('beetle') || lowerClass.includes('weevil')) {
-        return { name: 'カブトムシの仲間', type: 'beetle', sciName: 'Coleoptera', desc: '硬い殻を持った虫の仲間かも！AIが似ていると判断しました。' };
+        return { 
+          name: isJa ? 'カブトムシの仲間' : 'Beetle Species', 
+          type: 'beetle', 
+          sciName: 'Coleoptera', 
+          desc: isJa ? '硬い殻を持った虫の仲間かも！AIが似ていると判断しました。' : 'A hard-shelled insect identified by AI.' 
+        };
       }
       if (lowerClass.includes('stag beetle')) {
-         return { name: 'クワガタの仲間', type: 'stag_beetle', sciName: 'Lucanidae', desc: '大きなあごが特徴の虫の仲間です。' };
+         return { 
+           name: isJa ? 'クワガタの仲間' : 'Stag Beetle', 
+           type: 'stag_beetle', 
+           sciName: 'Lucanidae', 
+           desc: isJa ? '大きなあごが特徴の虫の仲間です。' : 'An insect known for its large mandibles.' 
+         };
       }
       if (lowerClass.includes('butterfly') || lowerClass.includes('moth')) {
-        return { name: 'チョウの仲間', type: 'butterfly', sciName: 'Lepidoptera', desc: 'きれいな羽を持った虫の仲間です。' };
+        return { 
+          name: isJa ? 'チョウの仲間' : 'Butterfly / Moth', 
+          type: 'butterfly', 
+          sciName: 'Lepidoptera', 
+          desc: isJa ? 'きれいな羽を持った虫の仲間です。' : 'An insect with beautiful wings.' 
+        };
       }
       if (lowerClass.includes('ant') || lowerClass.includes('bee') || lowerClass.includes('wasp')) {
-        return { name: 'ハチ・アリの仲間', type: 'other', sciName: 'Hymenoptera', desc: '社会を作って生活することが多い虫の仲間です。' };
+        return { 
+          name: isJa ? 'ハチ・アリの仲間' : 'Bee / Ant Species', 
+          type: 'other', 
+          sciName: 'Hymenoptera', 
+          desc: isJa ? '社会を作って生活することが多い虫の仲間です。' : 'Social insects often living in colonies.' 
+        };
       }
       if (lowerClass.includes('fly') || lowerClass.includes('mosquito')) {
-        return { name: 'ハエの仲間', type: 'other', sciName: 'Diptera', desc: '2枚の羽で素早く飛ぶ虫の仲間です。' };
+        return { 
+          name: isJa ? 'ハエの仲間' : 'Fly Species', 
+          type: 'other', 
+          sciName: 'Diptera', 
+          desc: isJa ? '2枚の羽で素早く飛ぶ虫の仲間です。' : 'Fast flying insects with two wings.' 
+        };
       }
       if (lowerClass.includes('spider') || lowerClass.includes('tarantula')) {
-         return { name: 'クモの仲間', type: 'other', sciName: 'Araneae', desc: '虫ではないけれど、よく見かける生き物です。' };
+         return { 
+           name: isJa ? 'クモの仲間' : 'Spider Species', 
+           type: 'other', 
+           sciName: 'Araneae', 
+           desc: isJa ? '虫ではないけれど、よく見かける生き物です。' : 'An arachnid commonly found in nature.' 
+         };
       }
       if (lowerClass.includes('insect') || lowerClass.includes('bug')) {
-         return { name: 'なぞの昆虫', type: 'other', sciName: 'Insecta', desc: 'AIには詳しい種類までは分かりませんでしたが、虫の仲間だと判断しました。' };
+         return { 
+           name: isJa ? 'なぞの昆虫' : 'Unknown Insect', 
+           type: 'other', 
+           sciName: 'Insecta', 
+           desc: isJa ? 'AIには詳しい種類までは分かりませんでしたが、虫の仲間だと判断しました。' : 'AI identified this as an insect species.' 
+         };
       }
 
-      // 虫以外のものが認識された場合、または全く分からない場合
       return { 
-        name: 'なぞの生き物・物体', 
+        name: isJa ? 'なぞの生き物・物体' : className.split(',')[0], 
         type: 'other', 
         sciName: 'Unknown', 
-        desc: `AIは「${className.split(',')[0]}」に似ていると言っています。虫ではないかもしれません。` 
+        desc: isJa ? `AIは「${className.split(',')[0]}」に似ていると言っています。` : `AI identified this object as ${className.split(',')[0]}.` 
       };
     }
-
 
     async function startAIFlow(event) {
       const file = event.target.files[0];
@@ -519,7 +749,6 @@
       const previewUrl = URL.createObjectURL(file);
       imgElement.src = previewUrl;
 
-      // 画像の読み込み完了を待つ
       await new Promise((resolve) => {
         imgElement.onload = resolve;
       });
@@ -527,19 +756,16 @@
       try {
         await loadModel();
 
-        document.getElementById('loading-title').innerHTML = "AI<ruby>解析中<rt>かいせきちゅう</rt></ruby>...";
-        document.getElementById('loading-desc').innerText = "画像から特徴を読み取っています";
+        const txt = i18n[state.lang];
+        document.getElementById('loading-title').innerHTML = txt.loadingAnalyzingTitle;
+        document.getElementById('loading-desc').innerText = txt.loadingAnalyzingDesc;
         
-        // 判定実行
         const predictions = await net.classify(imgElement);
         
         document.getElementById('modal-loading').classList.add('hidden');
-        event.target.value = ''; // フォームリセット
-
-        console.log('Predictions: ', predictions);
+        event.target.value = '';
 
         if (predictions && predictions.length > 0) {
-          // 最も確率の高い結果を採用
           const bestMatch = predictions[0].className;
           const mappedData = mapClassNameToInsect(bestMatch);
           
@@ -554,17 +780,16 @@
           
           showAIResultModal(result);
         } else {
-          showError("<ruby>画像<rt>がぞう</rt></ruby>を<ruby>認識<rt>にんしき</rt></ruby>できませんでした。");
+          showError();
         }
       } catch (error) {
         console.error(error);
-        showError("AIの<ruby>判定<rt>はんてい</rt></ruby>に<ruby>失敗<rt>しっぱい</rt></ruby>しました。");
+        showError();
         event.target.value = '';
       }
     }
 
     function showAIResultModal(data) {
-      // 画像プレビューの表示処理
       const previewImg = document.getElementById('ai-preview-img');
       if (data.previewUrl) {
         previewImg.src = data.previewUrl;
@@ -573,20 +798,16 @@
         previewImg.classList.add('hidden');
       }
 
-      // ユーザーに見せる結果
       document.getElementById('ai-result-name').innerHTML = data.name;
       document.getElementById('ai-result-sci').innerText = data.scientific_name;
       document.getElementById('ai-result-desc').innerHTML = data.description;
       
-      // フォームの初期値にセット (ユーザーが修正できるように)
       document.getElementById('edit-record-name').value = data.name.replace(/<rt>.*?<\/rt>/g, '').replace(/<ruby>|<\/ruby>/g, '');
       
-      // typeが想定外の値だった場合のフォールバック
       const validTypes = ['beetle', 'stag_beetle', 'butterfly', 'other'];
       const safeType = validTypes.includes(data.type) ? data.type : 'other';
       document.getElementById('edit-record-type').value = safeType;
       
-      // 隠しフィールドに保持
       document.getElementById('record-name').value = data.name;
       document.getElementById('record-type').value = safeType;
       document.getElementById('record-desc').value = data.description;
@@ -596,7 +817,6 @@
 
     function saveInsectRecord(e) {
       e.preventDefault();
-      // ユーザーが編集した名前とタイプを使用
       const finalName = document.getElementById('edit-record-name').value || document.getElementById('record-name').value;
       const finalType = document.getElementById('edit-record-type').value || document.getElementById('record-type').value || 'other';
 
@@ -619,7 +839,6 @@
       closeModal('modal-record');
       switchTab('tab-museum');
     }
-
 
     /* --- 図鑑描画 --- */
     function renderDictionary() {
@@ -651,9 +870,7 @@
       });
     }
 
-    /* =========================================================================
-       精密3D昆虫モデル（プロシージャル生成）
-       ========================================================================= */
+    /* --- 3Dモデルプロシージャル生成 --- */
     function createRealInsectModel(type = 'beetle') {
       const group = new THREE.Group();
       
@@ -668,7 +885,6 @@
       });
       const jointMaterial = new THREE.MeshStandardMaterial({ color: 0x0a0402, roughness: 0.6 });
 
-      // 1. 胸部
       const thoraxGeo = new THREE.SphereGeometry(0.7, 24, 16);
       thoraxGeo.scale(1.2, 0.7, 1);
       const thorax = new THREE.Mesh(thoraxGeo, chitinMaterial);
@@ -676,7 +892,6 @@
       thorax.castShadow = true;
       group.add(thorax);
 
-      // 2. 羽（上翅）
       const elytrLGeo = new THREE.SphereGeometry(0.85, 24, 16, 0, Math.PI);
       elytrLGeo.scale(0.85, 0.65, 1.7);
       const elytrL = new THREE.Mesh(elytrLGeo, chitinMaterial);
@@ -691,7 +906,6 @@
       elytrR.rotation.z = 0.1;
       group.add(elytrR);
 
-      // 3. 頭部＆複眼
       const headGeo = new THREE.SphereGeometry(0.4, 16, 16);
       headGeo.scale(1.1, 0.7, 0.9);
       const head = new THREE.Mesh(headGeo, chitinMaterial);
@@ -708,7 +922,6 @@
       group.add(eyeL);
       group.add(eyeR);
 
-      // 4. 角・大顎
       if (type === 'beetle') {
         const hornCurve = new THREE.CatmullRomCurve3([
           new THREE.Vector3(0, 0.5, 1.2),
@@ -744,7 +957,6 @@
         group.add(createJaw(false));
       }
 
-      // 5. 脚
       const createLeg = (isLeft, posZ, angleY) => {
         const legGroup = new THREE.Group();
         const sign = isLeft ? -1 : 1;
@@ -775,10 +987,7 @@
       return group;
     }
 
-
-    /* =========================================================================
-       マイ昆虫館 3Dウォークスルー空間 (Main Scene)
-       ========================================================================= */
+    /* --- メイン展示室 3D --- */
     let museumScene, museumCamera, museumRenderer;
     let avatarGroup, avatarBodyMat;
     const exhibitTargets = [];
@@ -1012,10 +1221,7 @@
       museumRenderer.setSize(container.clientWidth, container.clientHeight);
     }
 
-
-    /* =========================================================================
-       【白背景・ズーム対応】精密拡大観察ビューア
-       ========================================================================= */
+    /* --- 精密3D観察ビューア --- */
     let detailScene, detailCamera, detailRenderer, detailInsectGroup, detailControls;
 
     function initDetail3DView() {
@@ -1066,8 +1272,8 @@
       document.getElementById('detail-sci-name').innerText = insectData.sciName || '';
       document.getElementById('detail-date').innerText = insectData.date;
       document.getElementById('detail-pref').innerText = insectData.pref;
-      document.getElementById('detail-memo').innerText = insectData.memo || 'メモはありません。';
-      document.getElementById('detail-ai-desc').innerHTML = insectData.desc || 'AIの<ruby>解説<rt>かいせつ</rt></ruby>がありません。';
+      document.getElementById('detail-memo').innerText = insectData.memo || (state.lang === 'ja' ? 'メモはありません。' : 'No memo.');
+      document.getElementById('detail-ai-desc').innerHTML = insectData.desc || (state.lang === 'ja' ? 'AIの解説がありません。' : 'No description available.');
 
       if (detailInsectGroup) detailScene.remove(detailInsectGroup);
 
